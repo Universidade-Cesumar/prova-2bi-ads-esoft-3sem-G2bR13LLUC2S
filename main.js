@@ -2,6 +2,19 @@ const url = "https://6a29e555f59cb8f65f1db8fa.mockapi.io/materiais";
 
 const botao = document.getElementById("btn-cadastrar");
 
+function validarRetirada(estoqueAtual, quantidadeRetirada) {
+
+    if (quantidadeRetirada <= 0) {
+        return false;
+    }
+
+    if (quantidadeRetirada > estoqueAtual) {
+        return false;
+    }
+
+    return true;
+}
+
 function listarMateriais() {
 
     fetch(url)
@@ -95,3 +108,23 @@ botao.addEventListener("click", () => {
 });
 
 listarMateriais();
+
+document.addEventListener("click", (evento) => {
+
+    if (evento.target.classList.contains("btn-excluir")) {
+
+        const id = evento.target.dataset.id;
+
+        fetch(`${url}/${id}`, {
+            method: "DELETE"
+        })
+        .then(() => {
+            listarMateriais();
+        })
+        .catch(erro => {
+            console.error("Erro ao excluir:", erro);
+        });
+
+    }
+
+});
