@@ -91,9 +91,7 @@ botao.addEventListener("click", () => {
         body: JSON.stringify(material)
     })
     .then(resposta => resposta.json())
-    .then(dados => {
-
-        console.log("Material cadastrado:", dados);
+    .then(() => {
 
         document.getElementById("input-nome").value = "";
         document.getElementById("input-quantidade").value = "";
@@ -107,7 +105,7 @@ botao.addEventListener("click", () => {
 
 });
 
-listarMateriais();
+/* DELETE */
 
 document.addEventListener("click", (evento) => {
 
@@ -128,3 +126,52 @@ document.addEventListener("click", (evento) => {
     }
 
 });
+
+/* PUT */
+
+document.addEventListener("click", (evento) => {
+
+    if (evento.target.classList.contains("btn-baixar")) {
+
+        const linha = evento.target.closest("tr");
+
+        const quantidadeRetirada = Number(
+            linha.querySelector("#input-retirada").value
+        );
+
+        const estoqueAtual = Number(
+            linha.children[1].textContent
+        );
+
+        const id = evento.target.dataset.id;
+
+        if (!validarRetirada(estoqueAtual, quantidadeRetirada)) {
+
+            alert("Quantidade inválida para retirada!");
+
+            return;
+        }
+
+        const novoEstoque = estoqueAtual - quantidadeRetirada;
+
+        fetch(`${url}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                quantidade: novoEstoque
+            })
+        })
+        .then(() => {
+            listarMateriais();
+        })
+        .catch(erro => {
+            console.error("Erro ao atualizar estoque:", erro);
+        });
+
+    }
+
+});
+
+listarMateriais();
