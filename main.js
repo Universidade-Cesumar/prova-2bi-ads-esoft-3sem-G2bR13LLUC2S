@@ -17,7 +17,32 @@ function listarMateriais() {
                 tbody.innerHTML += `
                     <tr>
                         <td>${material.nome}</td>
+
                         <td>${material.quantidade}</td>
+
+                        <td>
+                            <input
+                                type="number"
+                                id="input-retirada"
+                                placeholder="Qtd"
+                                min="1">
+                        </td>
+
+                        <td>
+                            <button
+                                class="btn-baixar"
+                                data-id="${material.id}">
+                                Baixar
+                            </button>
+                        </td>
+
+                        <td>
+                            <button
+                                class="btn-excluir"
+                                data-id="${material.id}">
+                                Excluir
+                            </button>
+                        </td>
                     </tr>
                 `;
 
