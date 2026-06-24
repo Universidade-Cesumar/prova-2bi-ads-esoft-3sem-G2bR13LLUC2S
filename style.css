@@ -1,17 +1,9 @@
-/* =========================
-   ESTILO GERAL DA PÁGINA
-========================= */
-
 body{
     font-family: Arial, Helvetica, sans-serif;
     background: #eef2f7;
     padding: 30px;
     margin: 0;
 }
-
-/* =========================
-   TÍTULO PRINCIPAL
-========================= */
 
 h1{
     text-align: center;
@@ -24,19 +16,11 @@ h1{
     margin: 0 auto 40px auto;
 }
 
-/* =========================
-   CONTAINER PRINCIPAL
-========================= */
-
 .container{
     display: flex;
     gap: 25px;
     align-items: flex-start;
 }
-
-/* =========================
-   CARD DO FORMULÁRIO
-========================= */
 
 .formulario{
     width: 320px;
@@ -47,7 +31,8 @@ h1{
     box-shadow: 0 3px 15px rgba(0,0,0,.08);
 }
 
-.formulario h2{
+.formulario h2,
+.tabela h2{
     margin-bottom: 20px;
     color: #1e293b;
 }
@@ -67,10 +52,6 @@ h1{
     box-sizing: border-box;
 }
 
-/* =========================
-   BOTÃO CADASTRAR
-========================= */
-
 .formulario button{
     width: 100%;
     margin-top: 20px;
@@ -88,10 +69,6 @@ h1{
     background: #115e59;
 }
 
-/* =========================
-   CARD DA TABELA
-========================= */
-
 .tabela{
     flex: 1;
     background: white;
@@ -101,14 +78,20 @@ h1{
     box-shadow: 0 3px 15px rgba(0,0,0,.08);
 }
 
-.tabela h2{
-    margin-bottom: 20px;
-    color: #1e293b;
+#total-itens{
+    font-weight: bold;
+    color: #0f766e;
+    margin-bottom: 15px;
 }
 
-/* =========================
-   TABELA
-========================= */
+#input-busca{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
 
 table{
     width: 100%;
@@ -116,8 +99,6 @@ table{
     overflow: hidden;
     border-radius: 8px;
 }
-
-/* Cabeçalho */
 
 thead{
     background-color: #0f766e;
@@ -130,8 +111,6 @@ th{
     font-size: 15px;
     letter-spacing: 0.5px;
 }
-
-/* Linhas */
 
 td{
     padding: 14px 15px;
@@ -148,10 +127,6 @@ tbody tr:hover{
     transition: 0.2s;
 }
 
-/* =========================
-   INPUT DE RETIRADA
-========================= */
-
 #input-retirada{
     width: 70px;
     padding: 8px;
@@ -159,10 +134,6 @@ tbody tr:hover{
     border-radius: 6px;
     text-align: center;
 }
-
-/* =========================
-   BOTÃO BAIXAR
-========================= */
 
 .btn-baixar{
     background: #0891b2;
@@ -178,10 +149,6 @@ tbody tr:hover{
     background: #0e7490;
 }
 
-/* =========================
-   BOTÃO EXCLUIR
-========================= */
-
 .btn-excluir{
     background: #dc2626;
     color: white;
@@ -196,9 +163,14 @@ tbody tr:hover{
     background: #b91c1c;
 }
 
-/* =========================
-   COLUNAS DE AÇÃO
-========================= */
+.estoque-critico{
+    background-color: #fee2e2 !important;
+}
+
+.estoque-critico td{
+    color: #7f1d1d;
+    font-weight: bold;
+}
 
 td:nth-child(3),
 td:nth-child(4),

@@ -1,4 +1,4 @@
-'<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -8,56 +8,62 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <h1>Sistema de Controle de Almoxarifado</h1>
 
-<div class="container">
+    <h1>Sistema de Controle de Almoxarifado</h1>
 
-    <div class="formulario">
+    <div class="container">
 
-        <h2>Cadastrar Material</h2>
+        <div class="formulario">
 
-        <label for="input-nome">Nome do Material</label>
-        <input type="text" id="input-nome">
+            <h2>Cadastrar Material</h2>
 
-        <label for="input-quantidade">Quantidade</label>
-        <input type="number" id="input-quantidade">
+            <label for="input-nome">Nome do Material</label>
+            <input type="text" id="input-nome">
 
-        <button id="btn-cadastrar">
-            Cadastrar
-        </button>
+            <label for="input-quantidade">Quantidade</label>
+            <input type="number" id="input-quantidade">
+
+            <button id="btn-cadastrar">
+                Cadastrar
+            </button>
+
+        </div>
+
+        <div class="tabela">
+
+            <h2>Materiais Cadastrados</h2>
+
+            <p id="total-itens">
+                Total de itens: 0
+            </p>
+
+            <input
+                type="text"
+                id="input-busca"
+                placeholder="Pesquisar material...">
+
+            <table id="lista-materiais">
+
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Quantidade</th>
+                        <th>Retirada</th>
+                        <th>Baixar</th>
+                        <th>Excluir</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
-    <div class="tabela">
-
-        <h2>Materiais Cadastrados</h2>
-
-        <p id="total-itens">
-         Total de itens: 0
-        </p>
-
-        <table id="lista-materiais">
-
-            <thead>
-                <tr>
-                    <th>Material</th>
-                    <th>Quantidade</th>
-                    <th>Retirada</th>
-                    <th>Baixar</th>
-                    <th>Excluir</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-<script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

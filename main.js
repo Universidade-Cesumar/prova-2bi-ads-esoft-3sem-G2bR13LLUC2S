@@ -1,6 +1,7 @@
 const url = "https://6a29e555f59cb8f65f1db8fa.mockapi.io/materiais";
 
 const botao = document.getElementById("btn-cadastrar");
+const campoBusca = document.getElementById("input-busca");
 
 function validarRetirada(estoqueAtual, quantidadeRetirada) {
 
@@ -15,23 +16,34 @@ function validarRetirada(estoqueAtual, quantidadeRetirada) {
     return true;
 }
 
-function listarMateriais() {
+async function listarMateriais() {
 
-    fetch(url)
-        .then(resposta => resposta.json())
-        .then(dados => {
+    try {
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
 
-            document.getElementById("total-itens").textContent =
-    `Total de itens: ${dados.length}`;
+        const textoBusca = campoBusca.value.toLowerCase();
 
-            const tbody = document.querySelector("#lista-materiais tbody");
+        document.getElementById("total-itens").textContent =
+            `Total de itens: ${dados.length}`;
 
-            tbody.innerHTML = "";
+        const tbody = document.querySelector("#lista-materiais tbody");
 
-            dados.forEach(material => {
+        tbody.innerHTML = "";
+
+        dados
+            .filter(material =>
+                material.nome.toLowerCase().includes(textoBusca)
+            )
+            .forEach(material => {
+
+                const quantidade = Number(material.quantidade);
+
+                const classeEstoque =
+                    quantidade < 10 ? "estoque-critico" : "";
 
                 tbody.innerHTML += `
-                    <tr>
+                    <tr class="${classeEstoque}">
                         <td>${material.nome}</td>
 
                         <td>${material.quantidade}</td>
@@ -61,17 +73,15 @@ function listarMateriais() {
                         </td>
                     </tr>
                 `;
-
             });
 
-        })
-        .catch(erro => {
-            console.error("Erro ao listar materiais:", erro);
-        });
-
+    } catch (erro) {
+        console.error("Erro ao listar materiais:", erro);
+        alert("Erro ao carregar materiais. Verifique sua conexão com a internet.");
+    }
 }
 
-botao.addEventListener("click", () => {
+botao.addEventListener("click", async () => {
 
     const nome = document.getElementById("input-nome").value;
     const quantidade = document.getElementById("input-quantidade").value;
@@ -86,53 +96,47 @@ botao.addEventListener("click", () => {
         quantidade: quantidade
     };
 
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(material)
-    })
-    .then(resposta => resposta.json())
-    .then(() => {
+    try {
+        await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(material)
+        });
 
         document.getElementById("input-nome").value = "";
         document.getElementById("input-quantidade").value = "";
 
         listarMateriais();
 
-    })
-    .catch(erro => {
+    } catch (erro) {
         console.error("Erro ao cadastrar:", erro);
-    });
-
+        alert("Erro ao cadastrar material. Verifique sua conexão.");
+    }
 });
 
-/* DELETE */
-
-document.addEventListener("click", (evento) => {
+document.addEventListener("click", async (evento) => {
 
     if (evento.target.classList.contains("btn-excluir")) {
 
         const id = evento.target.dataset.id;
 
-        fetch(`${url}/${id}`, {
-            method: "DELETE"
-        })
-        .then(() => {
+        try {
+            await fetch(`${url}/${id}`, {
+                method: "DELETE"
+            });
+
             listarMateriais();
-        })
-        .catch(erro => {
+
+        } catch (erro) {
             console.error("Erro ao excluir:", erro);
-        });
-
+            alert("Erro ao excluir material. Verifique sua conexão.");
+        }
     }
-
 });
 
-/* PUT */
-
-document.addEventListener("click", (evento) => {
+document.addEventListener("click", async (evento) => {
 
     if (evento.target.classList.contains("btn-baixar")) {
 
@@ -149,32 +153,34 @@ document.addEventListener("click", (evento) => {
         const id = evento.target.dataset.id;
 
         if (!validarRetirada(estoqueAtual, quantidadeRetirada)) {
-
             alert("Quantidade inválida para retirada!");
-
             return;
         }
 
         const novoEstoque = estoqueAtual - quantidadeRetirada;
 
-        fetch(`${url}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                quantidade: novoEstoque
-            })
-        })
-        .then(() => {
+        try {
+            await fetch(`${url}/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    quantidade: novoEstoque
+                })
+            });
+
             listarMateriais();
-        })
-        .catch(erro => {
+
+        } catch (erro) {
             console.error("Erro ao atualizar estoque:", erro);
-        });
-
+            alert("Erro ao atualizar estoque. Verifique sua conexão.");
+        }
     }
+});
 
+campoBusca.addEventListener("input", () => {
+    listarMateriais();
 });
 
 listarMateriais();
