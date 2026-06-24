@@ -21,6 +21,9 @@ function listarMateriais() {
         .then(resposta => resposta.json())
         .then(dados => {
 
+            document.getElementById("total-itens").textContent =
+    `Total de itens: ${dados.length}`;
+
             const tbody = document.querySelector("#lista-materiais tbody");
 
             tbody.innerHTML = "";
